@@ -5,4 +5,5 @@
     <string name="Description">Description</string>
     <string name="Temp">20</string>
     <string name="TempDot">°</string>
+    <string name="weather_image">Weather Image</string>
 </resources>
