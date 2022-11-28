@@ -1,10 +1,16 @@
 package com.schen.weather;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -43,8 +49,35 @@ public class MainActivity extends AppCompatActivity {
         afficher();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.recherche,menu);
+        MenuItem menuItem= menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView)menuItem.getActionView();
+        searchView.setQueryHint("Ecrire le nom de la ville");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                maVille=query;
+                afficher();
+                //gestion du clavier
+                InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                if(getCurrentFocus()!=null){
+                    inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
+                }
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
+    }
+
     public void afficher(){
-        String url = "https://api.openweathermap.org/data/2.5/weather?q=Toronto&units=metric&appid=9b78452aaff49e04b6b1c6a22ce6fd92";
+        String url = "https://api.openweathermap.org/data/2.5/weather?q="+maVille+"&units=metric&appid=9b78452aaff49e04b6b1c6a22ce6fd92";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
             @Override

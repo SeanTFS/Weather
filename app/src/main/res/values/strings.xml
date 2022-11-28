@@ -6,4 +6,5 @@
     <string name="Temp">20</string>
     <string name="TempDot">°</string>
     <string name="weather_image">Weather Image</string>
+    <string name="searcj">Enter city name</string>
 </resources>
