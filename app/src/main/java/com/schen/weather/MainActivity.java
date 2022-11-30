@@ -31,7 +31,7 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
     //Declaration des champs
-    TextView mDate, mCity, mTemp, mDescription;
+    TextView mDate, mCity, mTemp, mDescription, mCloud, mWind;
     private RequestQueue requestQueue;
     ImageView imgIcon;
     String maVille="Toronto";
@@ -46,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
         mCity = findViewById(R.id.mCity);
         mTemp = findViewById(R.id.mTemp);
         mDescription = findViewById(R.id.mDescription);
+        mCloud = findViewById(R.id.mCloud);
+        mWind = findViewById(R.id.mWind);
         afficher();
     }
 
@@ -85,6 +87,8 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     JSONObject main_object = response.getJSONObject("main");
                     JSONArray array = response.getJSONArray("weather");
+                    JSONObject objectCloud = response.getJSONObject("clouds");
+                    JSONObject objectWind = response.getJSONObject("wind");
                     //Log.d("Tag","resultat = "+array.toString());
                     //Log.d("Tag","resultat = "+main_object.toString());
                     JSONObject object = array.getJSONObject(0);
@@ -95,7 +99,12 @@ public class MainActivity extends AppCompatActivity {
                     String description = object.getString("description");
                     String city = response.getString("name");
                     String icon = object.getString("icon");
+
+                    int tempCloud=(int)Math.round(objectCloud.getDouble("all"));
+                    int tempWind=(int)Math.round(objectWind.getDouble("speed"));
                     //mettre les valeurs
+                    mCloud.setText("Clouds: "+tempCloud);
+                    mWind.setText("Wind speed: "+tempWind);
                     mCity.setText(city);
                     mTemp.setText(temp);
                     mDescription.setText(description);

@@ -7,4 +7,6 @@
     <string name="TempDot">°</string>
     <string name="weather_image">Weather Image</string>
     <string name="searcj">Enter city name</string>
+    <string name="mCloud">Cloud</string>
+    <string name="mWind">Wind speed</string>
 </resources>
